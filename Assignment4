@@ -7,8 +7,9 @@ The result App showed -> Cats - 67% & Dogs - 33%
 After this the db pod was deleted.
 A New db pod was created & the deleted db pod was in "Terminating" state.
 The result App was refreshed.
-Obseravation is that all the vote data is lost. This is because the vote data was not maintained in any persistant DB.
-Though new db pod got created, If there was persistant DB, the vote data could have been retreived.
+Obseravation is that -
+Result App was not working.
+Worker pod was restarted.
 
 Command Snippet:-
 
@@ -52,3 +53,11 @@ pod "db-b54cd94f4-2xntr" deleted
 NAME                          READY   STATUS        RESTARTS   AGE
 pod/db-b54cd94f4-2xntr        1/1     Terminating   0          10m
 pod/db-b54cd94f4-4kr5f        1/1     Running       0          2s
+
+[root@ip-172-31-10-94 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-jqcwc        1/1     Running   0          16m
+redis-868d64d78-glx4q     1/1     Running   0          17m
+result-5d57b59f4b-sg859   1/1     Running   0          17m
+vote-94849dc97-b24gb      1/1     Running   0          17m
+worker-dd46d7584-n5zzd    1/1     Running   1          17m
