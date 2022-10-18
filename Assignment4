@@ -7,9 +7,28 @@ The result App showed -> Cats - 67% & Dogs - 33%
 After this the db pod was deleted.
 A New db pod was created & the deleted db pod was in "Terminating" state.
 The result App was refreshed.
-Obseravation is that -
-Result App was not working.
-Worker pod was restarted.
+Obseravations  -
+
+1. Result App stops working.
+   Once the DB pod is deleted, A new DB pod is created by K8.
+   Result App is still having DB connection with (deleted)old pod.
+   Hence Result App stops working.
+   
+   Solution is to correct the Result App to connect to new DB pod everytime when created.
+   By this solution "Resiliency" can be achieved always.
+   And any Application issues can be resolved in background to achieve "Robustness" without any service impact.
+   
+2. Worker pod was restarted.
+   Every time when a new DB pod is created, Worker pod restarts itself to connect to the new DB pod.
+   Hence it works flawlessly.
+   
+3. Vote data is Lost
+   Vote data is not getting stored in a persistant database.
+   Hence everytime the DB pod is deleted data is lost.
+   
+   Solution is to store the vote data in a persistant DB outside the cluster.
+   And when a new DB pod comes up, it needs to "Sync" the data.
+   This will result in data "parity" and "accuracy" in all the pods in multi-cluster set-up.
 
 Command Snippet:-
 
